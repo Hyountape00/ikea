@@ -40,7 +40,27 @@ $(document).ready(function(){
     } // 1040px 이상일 때 disable
   
   });
-
+  // sec4 배경높이값 설정
+  var sec4Height1 = $('.sec4-t').height();
+  $('.sec4-bg').css({
+    height: sec4Height1 + 283+'px'
+  })
+  // sec4 sideline 높이값 설정
+  var sec4SideHeight = $('.sec4-b').height();
+  console.log(sec4SideHeight)
+  $('.side-line').css({
+    height: sec4SideHeight + 240 +'px'
+  })
+  // resize 설정
+  $(window).resize(function(){
+    console.log('resized window')
+    // sec4 배경높이값 설정
+    var sec4Height1 = $('.sec4-t').height();
+    $('.sec4-bg').css({
+      height: sec4Height1 + 283+'px'
+      // 283 == sec4title, morebtn 등 패딩값 마진값 합
+    })
+  })
   // 새로고침시 sec1 letter 밑에 fixed 방지
   var myPos = $(window).scrollTop();
   if(myPos >= 171) {
@@ -52,7 +72,10 @@ $(document).ready(function(){
   // SCROLL
   $(window).scroll(function(){
     var myPos = $(window).scrollTop();
-    var sec4Top = $('.sec4').offset().top;
+    console.log('windowScrollTop is '+myPos)
+    var sec4Top = $('.sec4-news-right').offset().top;
+    var sec4TopMargin = sec4Top - 400;
+    var sec4TopBottom = $('.sec4-news-right').offset().top + $('.sec4-bg').height() - 800;
     // console.log(sec4Top);
     
     if(myPos <= 171) {
@@ -66,6 +89,12 @@ $(document).ready(function(){
         position: 'absolute',
         bottom: '-172px'
       });
+    }else if(sec4TopMargin <= myPos && myPos < sec4TopBottom) {
+      console.log('working scroll')
+      var plusPx = myPos - sec4Top + 100;
+      $('.sec4-news-right-cont').css({
+        marginTop: plusPx+'px'
+      })
     }
   });
   // product HOVER
